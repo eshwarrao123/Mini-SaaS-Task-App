@@ -26,7 +26,7 @@ const Dashboard = () => {
             const config = getAuthHeaders();
             if (!config) return;
 
-            const response = await axios.get('http://localhost:5000/api/tasks', config);
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/tasks`, config);
             setTasks(response.data);
         } catch (err) {
             setError('Failed to fetch tasks.');
@@ -50,7 +50,7 @@ const Dashboard = () => {
             const config = getAuthHeaders();
             if (!config) return;
 
-            const response = await axios.post('http://localhost:5000/api/tasks', { title: newTaskTitle }, config);
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/tasks`, { title: newTaskTitle }, config);
 
             setTasks([...tasks, response.data]);
             setNewTaskTitle('');
@@ -67,7 +67,7 @@ const Dashboard = () => {
             const config = getAuthHeaders();
             if (!config) return;
 
-            await axios.put(`http://localhost:5000/api/tasks/${id}`, { status: newStatus }, config);
+            await axios.put(`${import.meta.env.VITE_API_URL}/api/tasks/${id}`, { status: newStatus }, config);
 
             setTasks(tasks.map(task =>
                 task.id === id ? { ...task, status: newStatus } : task
@@ -83,7 +83,7 @@ const Dashboard = () => {
             const config = getAuthHeaders();
             if (!config) return;
 
-            await axios.delete(`http://localhost:5000/api/tasks/${id}`, config);
+            await axios.delete(`${import.meta.env.VITE_API_URL}/api/tasks/${id}`, config);
 
             // Remove deleted task from UI list
             setTasks(tasks.filter(task => task.id !== id));
